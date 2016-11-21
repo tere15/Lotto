@@ -1,0 +1,18 @@
+
+ 
+.lotto_basic {
+    background-color:#80aaff;
+    border-style:solid;
+    border-color:grey;
+    border-radius:5%;
+    height:420px;
+    min-width:250px;
+    color:white;
+}
+
+input[type=text]{
+    background:transparent;
+    border-color:transparent;
+    text-align:center;
+    color:white;
+}

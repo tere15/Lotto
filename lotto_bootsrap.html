@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html>
+    <head>
+        <link href="lotto.css"  type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+
+    <body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    
+      
+    <div ng-app="lotteryApp" ng-controller="lotteryCtrl">
+        
+        <container>
+            
+            <div class="row">
+                <div class="col-sm-3 col-md-offset-3 text-center">
+                    <div class="lotto_basic">
+                        <h1>Lottoarvonta</h1><p></p>
+                        <img class="responsive" src="lotto.jpg">
+                        <p></p>
+                        <button  class="btn btn-default" ng-click="arvo_numerot()">Arvo numerot</button>
+                        <p></p>
+                        <p></p>
+                        <input type="text" ng-model="result" >
+                    </div>
+                </div>
+            </div>
+        </container>
+        
+    </div>
+    
+    <script>
+    
+    var app = angular.module("lotteryApp",[]);
+    app.controller("lotteryCtrl", function($scope){
+        
+        var x;
+        var y;
+        var new_number;
+        var add_number = false;
+        var lottery_row = [];
+        var lottery = [];
+        
+        $scope.arvo_numerot = function(){
+            
+            for(x=0; x < 7; x++){
+                new_number = Math.round(40 * Math.random());
+                while(new_number === 0){
+                    new_number = Math.round(40 * Math.random());
+                }
+                
+                y=0; 
+    
+                while(y < lottery_row.length && !add_number){
+                // Check if there's already raffled number in lottery_row array.    
+                    
+                    if(lottery_row[y] === new_number){
+                        //Number already existed in the array.
+                        new_number = Math.round(40 * Math.random());                        
+                        while(new_number === 0){
+                            new_number = Math.round(40 * Math.random());
+                        }
+                        
+                        //console.log("duble number: " + new_number.toString());
+                        y = 0; //Let's check array again with new number.
+                        add_number = true;    
+                    }
+                    
+                    if(!add_number){
+                        //There was no double number;
+                        y++;
+                    }else{ 
+                        //There was double number, let's check if there's double number with new raffled number.
+                        add_number = false; 
+                    }
+                }
+                lottery_row[x] = new_number;
+                    
+            }
+            
+            lottery = lottery_row.sort(function(a,b){return a-b});
+            //console.log("in order: " + lottery.toString());
+            $scope.result = lottery.toString();
+        }
+    });
+    </script>
+
+
+    </body>
+
+</html>
